@@ -9,4 +9,6 @@
     <string name="bm"> Belum Menikah</string>
     <string name="nk">Menikah</string>
     <string name="Alm">Alamat</string>
+    <string name="jjk"> Jenis Kelamin</string>
+    <string name="st">Status</string>
 </resources>

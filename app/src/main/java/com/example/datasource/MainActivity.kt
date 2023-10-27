@@ -98,6 +98,9 @@ fun TampilForm(cobaViewModel: CobaViewModel = viewModel()) {
     var textTlp by remember {
         mutableStateOf("")
     }
+    var email by remember {
+        mutableStateOf("")
+    }
 
     val context = LocalContext.current
     val dataform: Dataform
@@ -119,11 +122,18 @@ fun TampilForm(cobaViewModel: CobaViewModel = viewModel()) {
         label = { Text(text = "Telepon") },
         onValueChange = { textTlp = it }
     )
+    OutlinedTextField(value = email ,
+        singleLine = true,
+        shape = MaterialTheme.shapes.large,
+        modifier = Modifier.fillMaxWidth(),
+        label = { Text(text = "Email") },
+        onValueChange = { email = it })
     SelectJK(option = jenis.map { id -> context.resources.getString(id) },
         onSelectionChanged = { cobaViewModel.setJenisk(it) }
     )
+
     Button(modifier = Modifier.fillMaxWidth(),
-        onClick = { cobaViewModel.insertData(textNama, textTlp, , dataform.sex) }
+        onClick = { cobaViewModel.insertData(textNama, textTlp, email, dataform.sex) }
     ) {
         Text(
             text = stringResource(id = R.string.reg),
@@ -145,10 +155,11 @@ fun SelectJK(
     option: List<String>,
     onSelectionChanged: (String) -> Unit = {}
 ) {
+    Text(text = stringResource(id = R.string.jjk))
     var selectedValue by rememberSaveable {
         mutableStateOf("")
     }
-    Column(modifier = Modifier.padding(16.dp)) {
+    Row(modifier = Modifier.padding(16.dp)) {
         option.forEach { item ->
             Row(
                 modifier = Modifier.selectable(
@@ -173,6 +184,7 @@ fun SelectJK(
 
     }
 }
+
 
 @Composable
 fun TampilHasil(namanya: String, telponnya: String, jenisnya: String, emailnya : String) {

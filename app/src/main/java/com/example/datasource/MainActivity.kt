@@ -41,6 +41,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.datasource.Data.DataSource.jenis
+import com.example.datasource.Data.DataSource.status
 import com.example.datasource.Data.Dataform
 import com.example.datasource.ui.theme.DataSourceTheme
 
@@ -91,7 +92,6 @@ fun TampilLayout(
 @Composable
 fun TampilForm(cobaViewModel: CobaViewModel = viewModel()) {
 
-
     var textNama by remember {
         mutableStateOf("")
     }
@@ -108,6 +108,10 @@ fun TampilForm(cobaViewModel: CobaViewModel = viewModel()) {
     val dataform: Dataform
     val uiState by cobaViewModel.uiState.collectAsState()
     dataform = uiState
+
+    Text(text = "Register")
+
+    Text(text = " Create Your Account")
 
     OutlinedTextField(value = textNama,
         singleLine = true,
@@ -133,6 +137,8 @@ fun TampilForm(cobaViewModel: CobaViewModel = viewModel()) {
     SelectJK(option = jenis.map { id -> context.resources.getString(id) },
         onSelectionChanged = { cobaViewModel.setJenisk(it) }
     )
+    SelectSt(option = status.map { id -> context.resources.getString(id) },
+        onSelectionChanged = { cobaViewModel.set(it) })
     OutlinedTextField(value = addres ,
         singleLine = true,
         shape = MaterialTheme.shapes.large,
@@ -155,7 +161,6 @@ fun TampilForm(cobaViewModel: CobaViewModel = viewModel()) {
         emailnya = cobaViewModel.email
     )
 }
-
 
 @Composable
 fun SelectJK(
@@ -191,7 +196,6 @@ fun SelectJK(
 
     }
 }
-
 
 @Composable
 fun TampilHasil(jenisnya: String, emailnya: String, addresnya: String, statusnya: Any) {

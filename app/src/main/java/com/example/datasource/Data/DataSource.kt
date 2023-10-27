@@ -9,7 +9,7 @@ object DataSource {
     )
 
     val status = listOf(
-        "Belum Menikah",
-        "Menikah"
+        R.string.bm,
+        R.string.nk
     )
 }

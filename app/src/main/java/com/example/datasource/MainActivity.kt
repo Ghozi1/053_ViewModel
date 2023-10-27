@@ -111,7 +111,7 @@ fun TampilForm(cobaViewModel: CobaViewModel = viewModel()) {
 
     Text(text = "Register")
 
-    Text(text = " Create Your Account")
+    Text(text = "Create Your Account")
 
     OutlinedTextField(value = textNama,
         singleLine = true,
@@ -134,40 +134,46 @@ fun TampilForm(cobaViewModel: CobaViewModel = viewModel()) {
         modifier = Modifier.fillMaxWidth(),
         label = { Text(text = "Email") },
         onValueChange = { email = it })
+    Text(text = stringResource(id = R.string.jjk))
     SelectJK(option = jenis.map { id -> context.resources.getString(id) },
         onSelectionChanged = { cobaViewModel.setJenisk(it) }
     )
+    Text(text = "Status",
+        modifier = Modifier.fillMaxWidth()
+    )
+
     SelectSt(option = status.map { id -> context.resources.getString(id) },
-        onSelectionChanged = { cobaViewModel.set(it) })
+        onSelectionChanged = { cobaViewModel.status(it) })
+
     OutlinedTextField(value = addres ,
         singleLine = true,
         shape = MaterialTheme.shapes.large,
         modifier = Modifier.fillMaxWidth(),
         label = { Text(text = "Alamat") },
-        onValueChange = { email = it })
+        onValueChange = { addres = it })
     Button(modifier = Modifier.fillMaxWidth(),
-        onClick = { cobaViewModel.insertData(textNama, textTlp, email, addres, dataform.sex) }
+        onClick = { cobaViewModel.insertData(textNama, textTlp, dataform.sex,email, addres, dataform.status) }
     ) {
         Text(
             text = stringResource(id = R.string.reg),
             fontSize = 16.sp
         )
     }
-    Spacer(modifier = Modifier.height(100.dp))
     TampilHasil(
         jenisnya = cobaViewModel.jenisKl,
-        statusnya = cobaViewModel.status,
+        statusnya = cobaViewModel.sts,
         addresnya = cobaViewModel.addres,
         emailnya = cobaViewModel.email
     )
 }
+
+
 
 @Composable
 fun SelectJK(
     option: List<String>,
     onSelectionChanged: (String) -> Unit = {}
 ) {
-    Text(text = stringResource(id = R.string.jjk))
     var selectedValue by rememberSaveable {
         mutableStateOf("")
     }
@@ -196,6 +202,41 @@ fun SelectJK(
 
     }
 }
+
+
+@Composable
+fun SelectSt(
+    option: List<String>,
+    onSelectionChanged: (String) -> Unit = {}
+) {
+    var selectedValue by rememberSaveable {
+        mutableStateOf("")
+    }
+    Row(modifier = Modifier.padding(16.dp)) {
+        option.forEach { item ->
+            Row(
+                modifier = Modifier.selectable(
+                    selected = selectedValue == item,
+                    onClick = {
+                        selectedValue = item
+                        onSelectionChanged(item)
+                    }
+                ),
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                RadioButton(selected = selectedValue == item,
+                    onClick = {
+                        selectedValue = item
+                        onSelectionChanged(item)
+                    }
+                )
+                Text(item)
+
+            }
+        }
+    }
+}
+
 
 @Composable
 fun TampilHasil(jenisnya: String, emailnya: String, addresnya: String, statusnya: Any) {

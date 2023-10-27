@@ -84,13 +84,14 @@ fun TampilLayout(
         ){
             TampilForm()
         }
-
     }
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun TampilForm(cobaViewModel: CobaViewModel = viewModel()) {
+
+
     var textNama by remember {
         mutableStateOf("")
     }
@@ -122,10 +123,10 @@ fun TampilForm(cobaViewModel: CobaViewModel = viewModel()) {
         onSelectionChanged = { cobaViewModel.setJenisk(it) }
     )
     Button(modifier = Modifier.fillMaxWidth(),
-        onClick = { cobaViewModel.insertData(textNama, textTlp, dataform.sex) }
+        onClick = { cobaViewModel.insertData(textNama, textTlp, , dataform.sex) }
     ) {
         Text(
-            text = stringResource(id = R.string.submit),
+            text = stringResource(id = R.string.reg),
             fontSize = 16.sp
         )
     }
@@ -133,6 +134,7 @@ fun TampilForm(cobaViewModel: CobaViewModel = viewModel()) {
     TampilHasil(
         namanya = cobaViewModel.namaUsr,
         telponnya = cobaViewModel.noTlp,
+        emailnya = cobaViewModel.email,
         jenisnya = cobaViewModel.jenisKl
     )
 }
@@ -173,7 +175,7 @@ fun SelectJK(
 }
 
 @Composable
-fun TampilHasil(namanya: String, telponnya: String, jenisnya: String) {
+fun TampilHasil(namanya: String, telponnya: String, jenisnya: String, emailnya : String) {
     ElevatedCard(
         elevation = CardDefaults.cardElevation(
             defaultElevation = 6.dp
@@ -190,6 +192,10 @@ fun TampilHasil(namanya: String, telponnya: String, jenisnya: String) {
         )
         Text(
             text = "Jenis Kelamin : " + jenisnya,
+            modifier = Modifier.padding(horizontal = 10.dp, vertical = 5.dp)
+        )
+        Text(
+            text = "Email : " + emailnya,
             modifier = Modifier.padding(horizontal = 10.dp, vertical = 5.dp)
         )
     }
